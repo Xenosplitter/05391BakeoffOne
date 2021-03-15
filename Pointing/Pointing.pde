@@ -116,7 +116,7 @@ void mousePressed() // test to see if hit was in target!
 
     //in this example code, we move the mouse back to the middle
     //ERROR: This code assumes that the window is at (0,0). This can have unexpected behavior if the window is moved anywhere else!
-    robot.mouseMove(width/2, (height)/2); //on click, move cursor to roughly center of window!
+    //robot.mouseMove(width/2, (height)/2); //on click, move cursor to roughly center of window!
 }  
 
 // Returns true if cursor location falls within a given button
