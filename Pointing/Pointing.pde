@@ -76,7 +76,15 @@ void draw()
     text((trialNum + 1) + " of " + trials.size(), 40, 20); //display what trial the user is on
 
     for (int i = 0; i < 16; i++)// for all button
-        drawButton(i); //draw button
+        {
+            Rectangle btn = getButtonLocation(i);
+            //Draw border around buttton if mouse is hovering over
+            if (cursorInButton(btn))
+            {
+                drawBorder(btn, i);
+            }
+            drawButton(btn, i); //draw button
+        }
 
     fill(255, 0, 0, 200); // set fill color to translucent red
     ellipse(mouseX, mouseY, 20, 20); //draw user cursor as a circle with a diameter of 20
@@ -136,16 +144,32 @@ Rectangle getButtonLocation(int i)
 }
 
 //you can edit this method to change how buttons appear
-void drawButton(int i)
+void drawButton(Rectangle bounds, int i)
 {
-    Rectangle bounds = getButtonLocation(i);
-
     if (trials.get(trialNum) == i) // see if current button is the target
+    {
         fill(0, 255, 255); // if so, fill cyan
+    }
     else
+    {
         fill(200); // if not, fill gray
+    }
 
     rect(bounds.x, bounds.y, bounds.width, bounds.height); //draw button
+}
+
+void drawBorder(Rectangle bounds, int i)
+{
+    if (trials.get(trialNum) == i) // see if current button is the target
+    {    
+        fill(0, 255, 0); // if so, fill green
+    }
+    else
+    {    
+        fill(255, 255, 0); // if not, fill yellow
+    }
+
+    rect(bounds.x - 5, bounds.y - 5, bounds.width + 10, bounds.height + 10); //draw border
 }
 
 void mouseMoved()
