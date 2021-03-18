@@ -5,6 +5,9 @@ import java.util.ArrayList;
 import java.util.Collections;
 import processing.core.PApplet;
 
+import processing.awt.PSurfaceAWT;
+import processing.awt.PSurfaceAWT.SmoothCanvas;
+
 //when in doubt, consult the Processsing reference: https://processing.org/reference/
 
 int margin = 200; //set the margin around the squares
@@ -157,7 +160,32 @@ void mouseDragged()
 
 void keyPressed() 
 {
-  //can use the keyboard if you wish
-  //https://processing.org/reference/keyTyped_.html
-  //https://processing.org/reference/keyCode.html
+  int shift = round(0.85*(padding+buttonSize));
+  int yShift = -round(shift*0.23);
+  int xShift = round(shift*0.04);
+  if (key == ' ') { 
+    mousePressed();
+  }
+  //TODO: figure out how to move mouse 
+  else if (key == 'w'){
+    setSystemMouse(mouseX+xShift, mouseY-shift + yShift);
+  }
+  else if (key == 'a'){
+    setSystemMouse(mouseX-shift+xShift, mouseY+ yShift);
+  }
+  else if (key == 's'){
+    setSystemMouse(mouseX+xShift, mouseY+shift+ yShift);
+  }
+  else if (key == 'd'){
+    setSystemMouse(mouseX+shift+xShift, mouseY+ yShift);
+  }
+  
+}
+
+void setSystemMouse(int target_x, int target_y)
+{
+  int x_test = ( (SmoothCanvas) ((PSurfaceAWT)surface).getNative()).getFrame().getX();
+  int y_test = ( (SmoothCanvas) ((PSurfaceAWT)surface).getNative()).getFrame().getY();
+  
+  robot.mouseMove(x_test + target_x, y_test + target_y+padding);
 }
