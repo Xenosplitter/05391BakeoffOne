@@ -84,6 +84,9 @@ void draw()
 
 void mousePressed() // test to see if hit was in target!
 {
+  mouseX = constrain(mouseX, margin-padding/2, width-margin+padding/2);
+  mouseY = constrain(mouseY, margin-padding/2, width-margin+padding/2);
+  
   if (trialNum >= trials.size()) //if task is over, just return
     return;
 
@@ -142,6 +145,8 @@ void mouseMoved()
 {
    //can do stuff everytime the mouse is moved (i.e., not clicked)
    //https://processing.org/reference/mouseMoved_.html
+   mouseX = constrain(mouseX, margin-padding/2, width-margin+padding/2);
+   mouseY = constrain(mouseY, margin-padding/2, width-margin+padding/2);
 }
 
 void mouseDragged()
