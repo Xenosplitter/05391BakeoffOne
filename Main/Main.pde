@@ -83,10 +83,12 @@ void draw()
   stroke(204, 102, 0);
   strokeWeight(5);
   line(mouseX, mouseY, getButtonX(trials.get(trialNum)), getButtonY(trials.get(trialNum)));
+  noStroke();
   if (trialNum < trials.size()-1) {
     int next = trialNum + 1;
     stroke(135, 107, 241);
     line(getButtonX(trials.get(trialNum)), getButtonY(trials.get(trialNum)), getButtonX(trials.get(next)), getButtonY(trials.get(next)));
+    noStroke();
   }
 }
 
