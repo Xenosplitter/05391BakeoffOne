@@ -1,3 +1,9 @@
 # Processing task files
 .vscode/
 out/
+
+.DS_Store
+
+
+
+

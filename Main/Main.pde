@@ -18,7 +18,7 @@ int hits = 0; //number of successful clicks
 int misses = 0; //number of missed clicks
 Robot robot; //initalized in setup 
 
-int numRepeats = 1; //sets the number of times each button repeats in the test
+int numRepeats = 3; //sets the number of times each button repeats in the test
 
 void setup()
 {
@@ -77,9 +77,16 @@ void draw()
 
   for (int i = 0; i < 16; i++)// for all button
     drawButton(i); //draw button
+    
+  stroke(239, 240, 70);
+  strokeWeight(1);
+  //fill(255, 0, 0, 200); // set fill color to translucent red
+  fill(255, 70, 184, 200); //neon pink
+  ellipse(mouseX, mouseY, 10, 10); //draw user cursor as a circle with a diameter of 20 --> 10
+  noStroke();
 
-  fill(255, 0, 0, 200); // set fill color to translucent red
-  ellipse(mouseX, mouseY, 20, 20); //draw user cursor as a circle with a diameter of 20
+  //fill(255, 0, 0, 200); // set fill color to translucent red
+  //ellipse(mouseX, mouseY, 20, 20); //draw user cursor as a circle with a diameter of 20
 }
 
 void mousePressed() // test to see if hit was in target!
@@ -133,8 +140,11 @@ void drawButton(int i)
 {
   Rectangle bounds = getButtonLocation(i);
 
-  if (trials.get(trialNum) == i) // see if current button is the target
-    fill(0, 255, 255); // if so, fill cyan
+  if (trials.get(trialNum) == i) { // see if current button is the target
+    //fill(0, 255, 255); // if so, fill cyan
+    stroke(255);
+    strokeWeight(4);
+    fill(57, 255, 20); } //neon green 
   else
     fill(200); // if not, fill gray
 
