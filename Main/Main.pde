@@ -27,7 +27,7 @@ void setup()
   noStroke(); //turn off all strokes, we're just using fills here (can change this if you want)
   textFont(createFont("Arial", 16)); //sets the font to Arial size 16
   textAlign(CENTER);
-  frameRate(60);
+  frameRate(80); //originally 60
   ellipseMode(CENTER); //ellipses are drawn from the center (BUT RECTANGLES ARE NOT!)
   //rectMode(CENTER); //enabling will break the scaffold code, but you might find it easier to work with centered rects
 
@@ -73,7 +73,9 @@ void draw()
   }
 
   fill(255); //set fill color to white
-  text((trialNum + 1) + " of " + trials.size(), 40, 20); //display what trial the user is on
+  //text((trialNum + 1) + " of " + trials.size(), 40, 20); //display what trial the user is on
+  textSize(20);
+  text((trialNum + 1) + " of " + trials.size(), width/2, 160); //display what trial the user is on
 
   for (int i = 0; i < 16; i++)// for all button
     drawButton(i); //draw button
@@ -145,8 +147,9 @@ void drawButton(int i)
     stroke(255);
     strokeWeight(4);
     fill(57, 255, 20); } //neon green 
-  else
-    fill(200); // if not, fill gray
+  else {
+    noStroke();
+    fill(200); } // if not, fill gray
 
   rect(bounds.x, bounds.y, bounds.width, bounds.height); //draw button
 }
