@@ -5,6 +5,9 @@ import java.util.ArrayList;
 import java.util.Collections;
 import processing.core.PApplet;
 
+import processing.awt.PSurfaceAWT;
+import processing.awt.PSurfaceAWT.SmoothCanvas;
+
 //when in doubt, consult the Processsing reference: https://processing.org/reference/
 
 int margin = 200; //set the margin around the squares
@@ -115,10 +118,13 @@ void mousePressed() // test to see if hit was in target!
   }
 
   trialNum++; //Increment trial number
+  
+  // Relocate Robot Mouse to Center of Screen
+  setSystemMouse(width/2, height/2);
 
-  //in this example code, we move the mouse back to the middle
-  //robot.mouseMove(width/2, (height)/2); //on click, move cursor to roughly center of window!
-}  
+  //in this (IKE: BROKEN) example code, we move the mouse back to the middle
+  //robot.mouseMove(x_test + width/2, y_test + (height)/2); //on click, move cursor to roughly center of window!
+}
 
 //probably shouldn't have to edit this method
 Rectangle getButtonLocation(int i) //for a given button ID, what is its location and size
@@ -126,6 +132,14 @@ Rectangle getButtonLocation(int i) //for a given button ID, what is its location
    int x = (i % 4) * (padding + buttonSize) + margin;
    int y = (i / 4) * (padding + buttonSize) + margin;
    return new Rectangle(x, y, buttonSize, buttonSize);
+}
+
+void setSystemMouse(int target_x, int target_y)
+{
+  int x_test = ( (SmoothCanvas) ((PSurfaceAWT)surface).getNative()).getFrame().getX();
+  int y_test = ( (SmoothCanvas) ((PSurfaceAWT)surface).getNative()).getFrame().getY();
+  
+  robot.mouseMove(x_test + target_x, y_test + target_y + padding);
 }
 
 //you can edit this method to change how buttons appear
@@ -153,6 +167,8 @@ void mouseDragged()
 {
   //can do stuff everytime the mouse is dragged
   //https://processing.org/reference/mouseDragged_.html
+  mouseX = constrain(mouseX, margin-padding/2, width-margin+padding/2);
+  mouseY = constrain(mouseY, margin-padding/2, width-margin+padding/2);
 }
 
 void keyPressed() 
