@@ -79,21 +79,13 @@ void draw()
 
   for (int i = 0; i < 16; i++)// for all button
     drawButton(i); //draw button
-<<<<<<< HEAD
-    
+
   stroke(239, 240, 70);
   strokeWeight(1);
-  //fill(255, 0, 0, 200); // set fill color to translucent red
   fill(255, 70, 184, 200); //neon pink
   ellipse(mouseX, mouseY, 10, 10); //draw user cursor as a circle with a diameter of 20 --> 10
   noStroke();
-
-  //fill(255, 0, 0, 200); // set fill color to translucent red
-  //ellipse(mouseX, mouseY, 20, 20); //draw user cursor as a circle with a diameter of 20
-=======
-
-  fill(255, 0, 0, 200); // set fill color to translucent red
-  ellipse(mouseX, mouseY, 20, 20); //draw user cursor as a circle with a diameter of 20
+  
   stroke(204, 102, 0);
   strokeWeight(5);
   line(mouseX, mouseY, getButtonX(trials.get(trialNum)), getButtonY(trials.get(trialNum)));
@@ -102,7 +94,6 @@ void draw()
     stroke(135, 107, 241);
     line(getButtonX(trials.get(trialNum)), getButtonY(trials.get(trialNum)), getButtonX(trials.get(next)), getButtonY(trials.get(next)));
   }
->>>>>>> origin/lookahead2
 }
 
 void mousePressed() // test to see if hit was in target!
