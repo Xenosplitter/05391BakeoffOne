@@ -3,7 +3,7 @@
 out/
 
 .DS_Store
-
+**/*.autosave
 
 
 

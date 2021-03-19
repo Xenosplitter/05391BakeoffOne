@@ -79,6 +79,7 @@ void draw()
 
   for (int i = 0; i < 16; i++)// for all button
     drawButton(i); //draw button
+<<<<<<< HEAD
     
   stroke(239, 240, 70);
   strokeWeight(1);
@@ -89,6 +90,19 @@ void draw()
 
   //fill(255, 0, 0, 200); // set fill color to translucent red
   //ellipse(mouseX, mouseY, 20, 20); //draw user cursor as a circle with a diameter of 20
+=======
+
+  fill(255, 0, 0, 200); // set fill color to translucent red
+  ellipse(mouseX, mouseY, 20, 20); //draw user cursor as a circle with a diameter of 20
+  stroke(204, 102, 0);
+  strokeWeight(5);
+  line(mouseX, mouseY, getButtonX(trials.get(trialNum)), getButtonY(trials.get(trialNum)));
+  if (trialNum < trials.size()-1) {
+    int next = trialNum + 1;
+    stroke(135, 107, 241);
+    line(getButtonX(trials.get(trialNum)), getButtonY(trials.get(trialNum)), getButtonX(trials.get(next)), getButtonY(trials.get(next)));
+  }
+>>>>>>> origin/lookahead2
 }
 
 void mousePressed() // test to see if hit was in target!
@@ -173,4 +187,14 @@ void keyPressed()
   //can use the keyboard if you wish
   //https://processing.org/reference/keyTyped_.html
   //https://processing.org/reference/keyCode.html
+}
+
+int getButtonX(int button) {
+  int i = button;
+  return (i % 4) * (padding + buttonSize) + margin + buttonSize/2;
+}
+
+int getButtonY(int button) {
+  int i = button;
+  return (i / 4) * (padding + buttonSize) + margin + buttonSize/2;
 }
