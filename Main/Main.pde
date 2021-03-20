@@ -16,6 +16,10 @@ int startTime = 0; // time starts when the first click is captured
 int finishTime = 0; //records the time of the final click
 int hits = 0; //number of successful clicks
 int misses = 0; //number of missed clicks
+int flash = 0;
+int flashTime = 50; //milliseconds per flash
+int flashStart = millis();
+
 Robot robot; //initalized in setup 
 
 int numRepeats = 3; //sets the number of times each button repeats in the test
@@ -55,6 +59,11 @@ void setup()
 void draw()
 {
   background(0); //set background to black
+  
+  if (flash == 1) {
+    background(228, 0, 0);
+    if (millis() > flashStart + flashTime) { flash = 0;}
+  }
 
   if (trialNum >= trials.size()) //check to see if test is over
   {
@@ -125,6 +134,8 @@ void mousePressed() // test to see if hit was in target!
   else
   {
     System.out.println("MISSED! " + trialNum + " " + (millis() - startTime)); // fail
+    flash = 1;
+    flashStart = millis();
     misses++;
   }
 
