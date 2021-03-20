@@ -73,26 +73,26 @@ void draw()
   }
 
   fill(255); //set fill color to white
-  //text((trialNum + 1) + " of " + trials.size(), 40, 20); //display what trial the user is on
   textSize(20);
   text((trialNum + 1) + " of " + trials.size(), width/2, 160); //display what trial the user is on
 
   for (int i = 0; i < 16; i++)// for all button
     drawButton(i); //draw button
 
-  stroke(239, 240, 70);
+  stroke(239, 240, 70); //yellow (cursor outline)
   strokeWeight(1);
-  fill(255, 70, 184, 200); //neon pink
+  fill(255, 70, 184, 200); //neon pink (cursor fill)
   ellipse(mouseX, mouseY, 10, 10); //draw user cursor as a circle with a diameter of 20 --> 10
   noStroke();
   
-  stroke(204, 102, 0);
+  stroke(204, 102, 0); //orange line
   strokeWeight(5);
   line(mouseX, mouseY, getButtonX(trials.get(trialNum)), getButtonY(trials.get(trialNum)));
   if (trialNum < trials.size()-1) {
     int next = trialNum + 1;
-    stroke(135, 107, 241);
+    stroke(135, 107, 241); //purple line
     line(getButtonX(trials.get(trialNum)), getButtonY(trials.get(trialNum)), getButtonX(trials.get(next)), getButtonY(trials.get(next)));
+    noStroke();
   }
 }
 
@@ -151,12 +151,22 @@ void drawButton(int i)
     //fill(0, 255, 255); // if so, fill cyan
     stroke(255);
     strokeWeight(4);
-    fill(57, 255, 20); } //neon green 
-  else {
-    noStroke();
-    fill(200); } // if not, fill gray
+    fill(#05F0F8); } //blue
+  
+  if ((mouseX > bounds.x - padding/2 && mouseX < bounds.x + bounds.width + padding/2) && (mouseY > bounds.y - padding/2 && mouseY < bounds.y + bounds.height + padding/2))//test to see if hit was within bounds
+  {
+    fill(#FFC5BF); //red -- hovered over wrong box
+    if (trials.get(trialNum) == i) { // see if current button is the target
+      //fill(0, 255, 255);  // if so, fill cyan
+      stroke(255);
+      strokeWeight(4);
+      fill(#39FF14); //neon green
+   }
+  }
 
   rect(bounds.x, bounds.y, bounds.width, bounds.height); //draw button
+  noStroke();
+  fill(255); //default white/gray
 }
 
 void mouseMoved()
