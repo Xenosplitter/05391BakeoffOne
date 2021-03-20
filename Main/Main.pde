@@ -69,13 +69,16 @@ void draw()
     text("Total time taken: " + timeTaken + " sec", width / 2, height / 2 + 80);
     text("Average time for each button: " + nf((timeTaken)/(float)(hits+misses),0,3) + " sec", width / 2, height / 2 + 100);
     text("Average time for each button + penalty: " + nf(((timeTaken)/(float)(hits+misses) + penalty),0,3) + " sec", width / 2, height / 2 + 140);
+    text("Want to test again? Press R", width / 2, height / 2 + 180);
     return; //return, nothing else to do now test is over
   }
 
   fill(255); //set fill color to white
   //text((trialNum + 1) + " of " + trials.size(), 40, 20); //display what trial the user is on
   textSize(20);
-  text((trialNum + 1) + " of " + trials.size(), width/2, 160); //display what trial the user is on
+  text("Button " + (trialNum + 1) + " of " + trials.size(), width/2, 160); //display what trial the user is on
+  text("Hits: " + hits, width / 2, 100);
+  text("Misses: " + misses, width / 2, 130);
 
   for (int i = 0; i < 16; i++)// for all button
     drawButton(i); //draw button
@@ -178,6 +181,22 @@ void keyPressed()
   //can use the keyboard if you wish
   //https://processing.org/reference/keyTyped_.html
   //https://processing.org/reference/keyCode.html
+  if (key == ' ')
+  {
+    mousePressed();
+  }
+  // Reset test (only available after completion)
+  else if (key == 'r' && trialNum >= trials.size())
+  {
+    // reset every value to initial
+    trials = new ArrayList<Integer>(); //contains the order of buttons that activate in the test
+    trialNum = 0; //the current trial number (indexes into trials array above)
+    startTime = 0; // time starts when the first click is captured
+    finishTime = 0; //records the time of the final click
+    hits = 0; //number of successful clicks
+    misses = 0; //number of missed clicks 
+    setup();
+  }
 }
 
 int getButtonX(int button) {
