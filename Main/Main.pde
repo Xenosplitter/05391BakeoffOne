@@ -82,12 +82,12 @@ void draw()
   ellipse(mouseX, mouseY, 20, 20); //draw user cursor as a circle with a diameter of 20
   stroke(204, 102, 0);
   strokeWeight(5);
-  line(mouseX, mouseY, getButtonX(trials.get(trialNum)), getButtonY(trials.get(trialNum)));
+  arrow(mouseX, mouseY, getButtonX(trials.get(trialNum)), getButtonY(trials.get(trialNum)));
   noStroke();
   if (trialNum < trials.size()-1) {
     int next = trialNum + 1;
     stroke(135, 107, 241);
-    line(getButtonX(trials.get(trialNum)), getButtonY(trials.get(trialNum)), getButtonX(trials.get(next)), getButtonY(trials.get(next)));
+    dottedLine(getButtonX(trials.get(trialNum)), getButtonY(trials.get(trialNum)), getButtonX(trials.get(next)), getButtonY(trials.get(next)),50);
     noStroke();
   }
 }
@@ -181,3 +181,23 @@ int getButtonY(int button) {
   int i = button;
   return (i / 4) * (padding + buttonSize) + margin + buttonSize/2;
 }
+
+void dottedLine(float x1, float y1, float x2, float y2, float steps){
+ for(int i=0; i<=steps; i++) {
+   float x = lerp(x1, x2, i/steps);
+   float y = lerp(y1, y2, i/steps);
+   noStroke();
+   ellipse(x, y,2,2);
+ }
+}
+
+void arrow(int x1, int y1, int x2, int y2) {
+  line(x1, y1, x2, y2);
+  pushMatrix();
+  translate(x2, y2);
+  float a = atan2(x1-x2, y2-y1);
+  rotate(a);
+  line(0, 0, -10, -10);
+  line(0, 0, 10, -10);
+  popMatrix();
+} 
