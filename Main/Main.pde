@@ -16,6 +16,7 @@ int startTime = 0; // time starts when the first click is captured
 int finishTime = 0; //records the time of the final click
 int hits = 0; //number of successful clicks
 int misses = 0; //number of missed clicks
+boolean lastClickWasError = false;
 Robot robot; //initalized in setup 
 
 int numRepeats = 3; //sets the number of times each button repeats in the test
@@ -69,7 +70,7 @@ void draw()
     text("Total time taken: " + timeTaken + " sec", width / 2, height / 2 + 80);
     text("Average time for each button: " + nf((timeTaken)/(float)(hits+misses),0,3) + " sec", width / 2, height / 2 + 100);
     text("Average time for each button + penalty: " + nf(((timeTaken)/(float)(hits+misses) + penalty),0,3) + " sec", width / 2, height / 2 + 140);
-    text("Want to test again? Press R", width / 2, height / 2 + 180);
+    text("Want to test again? Press \'R\'", width / 2, height / 2 + 180);
     return; //return, nothing else to do now test is over
   }
 
@@ -96,6 +97,13 @@ void draw()
     int next = trialNum + 1;
     stroke(135, 107, 241);
     line(getButtonX(trials.get(trialNum)), getButtonY(trials.get(trialNum)), getButtonX(trials.get(next)), getButtonY(trials.get(next)));
+  }
+
+  if (lastClickWasError)
+  {
+    fill(255, 0, 0); // Red
+    text("Misses: " + misses, width / 2, 130);
+    fill(255); // reset to white
   }
 }
 
@@ -124,11 +132,13 @@ void mousePressed() // test to see if hit was in target!
   {
     System.out.println("HIT! " + trialNum + " " + (millis() - startTime)); // success
     hits++; 
+    lastClickWasError = false;
   } 
   else
   {
     System.out.println("MISSED! " + trialNum + " " + (millis() - startTime)); // fail
     misses++;
+    lastClickWasError = true;
   }
 
   trialNum++; //Increment trial number
