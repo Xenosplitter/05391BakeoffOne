@@ -75,9 +75,14 @@ void draw()
     return; //return, nothing else to do now test is over
   }
 
+  //draw text
   fill(255); //set fill color to white
   //text((trialNum + 1) + " of " + trials.size(), 40, 20); //display what trial the user is on
   textSize(20);
+  if (trialNum <= 1)
+  {
+    text("Left click or press SPACE when hovering over the blue box!", width/2, 70);
+  }
   text("Button " + (trialNum + 1) + " of " + trials.size(), width/2, 160); //display what trial the user is on
   text("Hits: " + hits, width / 2, 100);
   text("Misses: " + misses, width / 2, 130);
