@@ -81,23 +81,12 @@ void draw()
   text("Hits: " + hits, width / 2, 100);
   text("Misses: " + misses, width / 2, 130);
 
-  for (int i = 0; i < 16; i++)// for all button
-    drawButton(i); //draw button
-
   stroke(239, 240, 70);
   strokeWeight(1);
   fill(255, 70, 184, 200); //neon pink
   ellipse(mouseX, mouseY, 10, 10); //draw user cursor as a circle with a diameter of 20 --> 10
   noStroke();
   
-  stroke(204, 102, 0);
-  strokeWeight(5);
-  line(mouseX, mouseY, getButtonX(trials.get(trialNum)), getButtonY(trials.get(trialNum)));
-  if (trialNum < trials.size()-1) {
-    int next = trialNum + 1;
-    stroke(135, 107, 241);
-    line(getButtonX(trials.get(trialNum)), getButtonY(trials.get(trialNum)), getButtonX(trials.get(next)), getButtonY(trials.get(next)));
-  }
 
   if (lastClickWasError)
   {
@@ -105,6 +94,26 @@ void draw()
     text("Misses: " + misses, width / 2, 130);
     fill(255); // reset to white
   }
+  fill(255);
+  noStroke();
+  for (int i = 0; i < 16; i++)// for all button
+        {
+            Rectangle btn = getButtonLocation(i);
+            //Draw border around buttton if mouse is hovering over
+            if (cursorInButton(btn))
+            {
+                drawBorder(btn, i);
+            }
+            drawButton(btn, i); //draw button
+        }  
+  if (trialNum < trials.size()-1) {
+    int next = trialNum + 1;
+    stroke(135, 107, 241);
+    line(getButtonX(trials.get(trialNum)), getButtonY(trials.get(trialNum)), getButtonX(trials.get(next)), getButtonY(trials.get(next)));
+  }
+  stroke(204, 102, 0);
+  strokeWeight(5);
+  line(mouseX, mouseY, getButtonX(trials.get(trialNum)), getButtonY(trials.get(trialNum))); 
 }
 
 void mousePressed() // test to see if hit was in target!
@@ -156,20 +165,18 @@ Rectangle getButtonLocation(int i) //for a given button ID, what is its location
 }
 
 //you can edit this method to change how buttons appear
-void drawButton(int i)
+void drawButton(Rectangle bounds, int i)
 {
-  Rectangle bounds = getButtonLocation(i);
+    if (trials.get(trialNum) == i) // see if current button is the target
+    {
+        fill(0, 255, 255); // if so, fill cyan
+    }
+    else
+    {
+        fill(200); // if not, fill gray
+    }
 
-  if (trials.get(trialNum) == i) { // see if current button is the target
-    //fill(0, 255, 255); // if so, fill cyan
-    stroke(255);
-    strokeWeight(4);
-    fill(57, 255, 20); } //neon green 
-  else {
-    noStroke();
-    fill(200); } // if not, fill gray
-
-  rect(bounds.x, bounds.y, bounds.width, bounds.height); //draw button
+    rect(bounds.x, bounds.y, bounds.width, bounds.height); //draw button
 }
 
 void mouseMoved()
@@ -207,6 +214,27 @@ void keyPressed()
     misses = 0; //number of missed clicks 
     setup();
   }
+}
+
+void drawBorder(Rectangle bounds, int i)
+{
+    if (trials.get(trialNum) == i) // see if current button is the target
+    {    
+        fill(255, 255, 0); // if so, fill yellow
+    }
+    else
+    {    
+        fill(255, 255, 0); // if not, fill yellow
+    }
+
+    rect(bounds.x - 5, bounds.y - 5, bounds.width + 10, bounds.height + 10); //draw border
+}
+
+// Returns true if cursor location falls within a given button, including padding 
+boolean cursorInButton(Rectangle bounds)
+{
+    return (mouseX > bounds.x -padding/2 && mouseX < bounds.x + bounds.width + padding/2)
+        && (mouseY > bounds.y -padding/2 && mouseY < bounds.y + bounds.height + padding/2);
 }
 
 int getButtonX(int button) {
