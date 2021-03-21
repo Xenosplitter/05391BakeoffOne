@@ -58,6 +58,7 @@ void draw()
 {
   background(0); //set background to black
 
+  //draw finale
   if (trialNum >= trials.size()) //check to see if test is over
   {
     float timeTaken = (finishTime-startTime) / 1000f;
@@ -86,14 +87,8 @@ void draw()
   text("Button " + (trialNum + 1) + " of " + trials.size(), width/2, 160); //display what trial the user is on
   text("Hits: " + hits, width / 2, 100);
   text("Misses: " + misses, width / 2, 130);
-
-  stroke(239, 240, 70);
-  strokeWeight(1);
-  fill(255, 70, 184, 200); //neon pink
-  ellipse(mouseX, mouseY, 10, 10); //draw user cursor as a circle with a diameter of 20 --> 10
-  noStroke();
   
-
+  //draw boxes
   if (lastClickWasError)
   {
     fill(255, 0, 0); // Red
@@ -112,6 +107,13 @@ void draw()
             }
             drawButton(btn, i); //draw button
         }  
+
+  //cursor
+  stroke(239, 240, 70);
+  strokeWeight(1);
+  fill(255, 70, 184, 200); //neon pink
+  ellipse(mouseX, mouseY, 10, 10); //draw user cursor as a circle with a diameter of 20 --> 10
+  noStroke();
 }
 
 void mousePressed() // test to see if hit was in target!
