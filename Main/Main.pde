@@ -6,7 +6,8 @@ import java.util.Collections;
 import processing.core.PApplet;
 
 //when in doubt, consult the Processsing reference: https://processing.org/reference/
-
+int Y_AXIS = 1;
+int X_AXIS = 2;
 int margin = 200; //set the margin around the squares
 final int padding = 50; // padding between buttons and also their width/height
 final int buttonSize = 40; // padding between buttons and also their width/height
@@ -106,14 +107,6 @@ void draw()
             }
             drawButton(btn, i); //draw button
         }  
-  if (trialNum < trials.size()-1) {
-    int next = trialNum + 1;
-    stroke(135, 107, 241);
-    line(getButtonX(trials.get(trialNum)), getButtonY(trials.get(trialNum)), getButtonX(trials.get(next)), getButtonY(trials.get(next)));
-  }
-  stroke(204, 102, 0);
-  strokeWeight(5);
-  line(mouseX, mouseY, getButtonX(trials.get(trialNum)), getButtonY(trials.get(trialNum))); 
 }
 
 void mousePressed() // test to see if hit was in target!
@@ -168,8 +161,17 @@ Rectangle getButtonLocation(int i) //for a given button ID, what is its location
 void drawButton(Rectangle bounds, int i)
 {
     if (trials.get(trialNum) == i) // see if current button is the target
+    { 
+        if ((trialNum < trials.size()-1) && (trials.get(trialNum+1) == i)) // split square diagonally
+        {
+         setGradient(bounds.x, bounds.y, buttonSize, buttonSize, color(0, 255, 255), color(255, 153, 0), X_AXIS);
+        } else {
+          fill(0, 255, 255); // if so, fill cyan
+        }
+    }
+    else if ((trialNum < trials.size()-1) && (trials.get(trialNum+1) == i)) // see if current button is next target
     {
-        fill(0, 255, 255); // if so, fill cyan
+        fill(255, 153, 0); // if so, fill orange
     }
     else
     {
@@ -245,4 +247,27 @@ int getButtonX(int button) {
 int getButtonY(int button) {
   int i = button;
   return (i / 4) * (padding + buttonSize) + margin + buttonSize/2;
+}
+
+void setGradient(int x, int y, float w, float h, color c1, color c2, int axis ) {
+
+  noFill();
+
+  if (axis == Y_AXIS) {  // Top to bottom gradient
+    for (int i = y; i <= y+h; i++) {
+      float inter = map(i, y, y+h, 0, 1);
+      color c = lerpColor(c1, c2, inter);
+      stroke(c);
+      line(x, i, x+w, i);
+    }
+  }  
+  else if (axis == X_AXIS) {  // Left to right gradient
+    for (int i = x; i <= x+w; i++) {
+      float inter = map(i, x, x+w, 0, 1);
+      color c = lerpColor(c1, c2, inter);
+      stroke(c);
+      line(i, y, i, y+h);
+    }
+  }
+  noStroke();
 }
