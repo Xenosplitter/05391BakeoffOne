@@ -175,9 +175,7 @@ void mouseDragged()
 
 void keyPressed() 
 {
-  //can use the keyboard if you wish
-  //https://processing.org/reference/keyTyped_.html
-  //https://processing.org/reference/keyCode.html
+  if (key == ' ') {mousePressed();}
 }
 
 int getButtonX(int button) {
