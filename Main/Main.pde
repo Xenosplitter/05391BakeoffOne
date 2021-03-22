@@ -18,7 +18,12 @@ int finishTime = 0; //records the time of the final click
 int hits = 0; //number of successful clicks
 int misses = 0; //number of missed clicks
 boolean lastClickWasError = false;
-Robot robot; //initalized in setup 
+Robot robot; //initalized in setup
+
+// Program Color Scheme
+color current_color = color(57, 255, 20); // green
+color next_color = color(231,180,22); // traffic light yellow
+color outline_color = color(255, 255, 255); // white
 
 int numRepeats = 3; //sets the number of times each button repeats in the test
 
@@ -80,9 +85,8 @@ void draw()
   fill(255); //set fill color to white
   //text((trialNum + 1) + " of " + trials.size(), 40, 20); //display what trial the user is on
   textSize(20);
-  if (trialNum <= 1)
-  {
-    text("Left click or press SPACE when hovering over the blue box!", width/2, 70);
+  if (trialNum == 0) {
+    text("Left click or press SPACE when hovering over the green box!", width/2, 70);
   }
   text("Button " + (trialNum + 1) + " of " + trials.size(), width/2, 160); //display what trial the user is on
   text("Hits: " + hits, width / 2, 100);
@@ -103,7 +107,7 @@ void draw()
             //Draw border around buttton if mouse is hovering over
             if (cursorInButton(btn))
             {
-                drawBorder(btn, i);
+                drawBorder(btn);
             }
             drawButton(btn, i); //draw button
         }  
@@ -137,7 +141,7 @@ void mousePressed() // test to see if hit was in target!
   Rectangle bounds = getButtonLocation(trials.get(trialNum));
 
  //check to see if mouse cursor is inside button 
-  if ((mouseX > bounds.x - padding/2 && mouseX < bounds.x + bounds.width + padding/2) && (mouseY > bounds.y - padding/2 && mouseY < bounds.y + bounds.height + padding/2)) // test to see if hit was within bounds
+  if ((mouseX >= bounds.x - padding/2 && mouseX <= bounds.x + bounds.width + padding/2) && (mouseY >= bounds.y - padding/2 && mouseY <= bounds.y + bounds.height + padding/2)) // test to see if hit was within bounds
   {
     System.out.println("HIT! " + trialNum + " " + (millis() - startTime)); // success
     hits++; 
@@ -167,21 +171,18 @@ Rectangle getButtonLocation(int i) //for a given button ID, what is its location
 //you can edit this method to change how buttons appear
 void drawButton(Rectangle bounds, int i)
 {
-    if (trials.get(trialNum) == i) // see if current button is the target
-    { 
-        if ((trialNum < trials.size()-1) && (trials.get(trialNum+1) == i)) // split square diagonally
-        {
-         setGradient(bounds.x, bounds.y, buttonSize, buttonSize, color(0, 255, 255), color(255, 153, 0), X_AXIS);
+    if (trials.get(trialNum) == i) {
+        // see if current button is the target
+        if ((trialNum < trials.size()-1) && (trials.get(trialNum+1) == i)) {
+            // indicate repeated current/next square with gradient
+            setGradient(bounds.x, bounds.y, buttonSize, buttonSize, current_color, next_color, X_AXIS);
         } else {
-          fill(0, 255, 255); // if so, fill cyan
+          fill(current_color);
         }
-    }
-    else if ((trialNum < trials.size()-1) && (trials.get(trialNum+1) == i)) // see if current button is next target
-    {
-        fill(255, 153, 0); // if so, fill orange
-    }
-    else
-    {
+    } else if ((trialNum < trials.size()-1) && (trials.get(trialNum+1) == i)) {
+        // see if current button is next target
+        fill(next_color);
+    } else {
         fill(200); // if not, fill gray
     }
 
@@ -225,17 +226,9 @@ void keyPressed()
   }
 }
 
-void drawBorder(Rectangle bounds, int i)
+void drawBorder(Rectangle bounds)
 {
-    if (trials.get(trialNum) == i) // see if current button is the target
-    {    
-        fill(255, 255, 0); // if so, fill yellow
-    }
-    else
-    {    
-        fill(255, 255, 0); // if not, fill yellow
-    }
-
+    fill(outline_color);
     rect(bounds.x - 5, bounds.y - 5, bounds.width + 10, bounds.height + 10); //draw border
 }
 
