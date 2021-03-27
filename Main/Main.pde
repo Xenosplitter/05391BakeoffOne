@@ -29,7 +29,7 @@ color current_color = color(57, 255, 20); // green
 color next_color = color(231,180,22); // traffic light yellow
 color outline_color = color(255, 255, 255); // white
 
-int numRepeats = 3; //sets the number of times each button repeats in the test
+int numRepeats = 20; //sets the number of times each button repeats in the test
 
 void setup()
 {
