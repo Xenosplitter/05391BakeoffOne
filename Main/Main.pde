@@ -17,6 +17,10 @@ int startTime = 0; // time starts when the first click is captured
 int finishTime = 0; //records the time of the final click
 int hits = 0; //number of successful clicks
 int misses = 0; //number of missed clicks
+int participant = 42;
+int lastX = 0;
+int lastY = 0;
+int lastTime = millis();
 boolean lastClickWasError = false;
 Robot robot; //initalized in setup
 
@@ -122,6 +126,8 @@ void draw()
 
 void mousePressed() // test to see if hit was in target!
 {
+  int hit = 0;
+
   mouseX = constrain(mouseX, margin-padding/2, width-margin+padding/2);
   mouseY = constrain(mouseY, margin-padding/2, width-margin+padding/2);
   
@@ -141,15 +147,16 @@ void mousePressed() // test to see if hit was in target!
   Rectangle bounds = getButtonLocation(trials.get(trialNum));
 
  //check to see if mouse cursor is inside button 
-  if ((mouseX >= bounds.x - padding/2 && mouseX <= bounds.x + bounds.width + padding/2) && (mouseY >= bounds.y - padding/2 && mouseY <= bounds.y + bounds.height + padding/2)) // test to see if hit was within bounds
+  if ((mouseX >= bounds.x && mouseX <= bounds.x + bounds.width) && (mouseY >= bounds.y && mouseY <= bounds.y + bounds.height)) // test to see if hit was within bounds
   {
-    System.out.println("HIT! " + trialNum + " " + (millis() - startTime)); // success
-    hits++; 
+    //System.out.println("HIT! " + trialNum + " " + (millis() - startTime)); // success
+    hits++;
+    hit = 1;  
     lastClickWasError = false;
   } 
   else
   {
-    System.out.println("MISSED! " + trialNum + " " + (millis() - startTime)); // fail
+    //System.out.println("MISSED! " + trialNum + " " + (millis() - startTime)); // fail
     misses++;
     lastClickWasError = true;
   }
@@ -158,6 +165,15 @@ void mousePressed() // test to see if hit was in target!
 
   //in this example code, we move the mouse back to the middle
   //robot.mouseMove(width/2, (height)/2); //on click, move cursor to roughly center of window!
+  int otherX = bounds.x+bounds.width/2;
+  int otherY = bounds.y+bounds.height/2;
+  int now = millis();
+  float timeLapse = (now-lastTime)/1000.0;
+  println(trialNum +","+ participant +","+ lastX +","+ lastY +","+ otherX +","+ otherY +","+ 40 +","+ timeLapse+","+hit);
+  lastX = mouseX;
+  lastY = mouseY;
+  lastTime = now;
+  
 }  
 
 //probably shouldn't have to edit this method
@@ -235,8 +251,8 @@ void drawBorder(Rectangle bounds)
 // Returns true if cursor location falls within a given button, including padding 
 boolean cursorInButton(Rectangle bounds)
 {
-    return (mouseX > bounds.x -padding/2 && mouseX < bounds.x + bounds.width + padding/2)
-        && (mouseY > bounds.y -padding/2 && mouseY < bounds.y + bounds.height + padding/2);
+    return (mouseX > bounds.x  && mouseX < bounds.x + bounds.width )
+        && (mouseY > bounds.y  && mouseY < bounds.y + bounds.height);
 }
 
 int getButtonX(int button) {
